@@ -108,6 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_URL = '/admin/login/'
+LOGIN_ERROR_URL = '/'
+LOGOUT_REDIRECT_URL = '/admin/login/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
