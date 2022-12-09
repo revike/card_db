@@ -7,9 +7,9 @@ from django.db import models
 class Card(models.Model):
     """Model card"""
     TERM_CHOICES = (
-        ('1', '1 месяц'),
-        ('6', '6 месяцев'),
-        ('12', '1 год'),
+        (1, '1 месяц'),
+        (6, '6 месяцев'),
+        (12, '1 год'),
     )
     series_valid = RegexValidator(regex='^\d{4}$')
     series = models.PositiveSmallIntegerField(
