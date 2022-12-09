@@ -6,6 +6,7 @@ from django.views import generic
 
 from main_app.forms import CardUpdateForm, CardCreateForm
 from main_app.models import ProfileCard, Card, HistoryCard
+from main_app.tasks import generate_cards
 
 
 class CardListView(generic.ListView):
@@ -115,6 +116,7 @@ class CardCreateView(generic.CreateView):
     template_name = 'main_app/card_create.html'
     model = Card
     form_class = CardCreateForm
+    success_url = reverse_lazy('main:cards')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -122,7 +124,11 @@ class CardCreateView(generic.CreateView):
         return context
 
     def form_valid(self, form):
-        return super().form_valid(form)
+        data = form.data
+        term = int(data['term'])
+        score = int(data['score'])
+        generate_cards.delay(term, score)
+        return HttpResponseRedirect(reverse('main:cards'))
 
     @method_decorator(user_passes_test(lambda u: u.is_staff))
     def dispatch(self, *args, **kwargs):

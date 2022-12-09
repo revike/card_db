@@ -2,6 +2,8 @@ from decimal import Decimal
 
 from django.core.validators import MinValueValidator, RegexValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Card(models.Model):
@@ -16,7 +18,7 @@ class Card(models.Model):
     series = models.PositiveSmallIntegerField(
         validators=[series_valid], verbose_name='серия',
         error_messages='серия карты состоит из 4х цифр')
-    numbers = models.PositiveBigIntegerField(verbose_name='номер')
+    numbers = models.CharField(max_length=8, unique=True, verbose_name='номер')
     release_data = models.DateTimeField(auto_now_add=True,
                                         verbose_name='дата выпуска')
     term = models.PositiveSmallIntegerField(choices=TERM_CHOICES,
@@ -57,6 +59,15 @@ class ProfileCard(models.Model):
         db_table = "profile"
         verbose_name = "Профиль"
         verbose_name_plural = "Профили"
+
+    @receiver(post_save, sender=Card)
+    def create_card_profile(sender, instance, created, **kwargs):
+        if created:
+            ProfileCard.objects.create(card=instance)
+
+    @receiver(post_save, sender=Card)
+    def save_card_profile(sender, instance, **kwargs):
+        instance.profilecard.save()
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
