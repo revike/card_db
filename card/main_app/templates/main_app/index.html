@@ -1,9 +1,28 @@
 {% extends 'main_app/base.html' %}
 {% load static %}
+{% load url_replace %}
 
 {% block content %}
     {% for object in object_list %}
-        {{ object }}
+        <div><a href="{% url 'main:card' pk=object.pk %}">{{ object.card }}</a></div>
     {% endfor %}
+
+    {% if page_obj != None %}
+        <div>
+    <span>
+        {% if page_obj.has_previous %}
+            <a href="?{% url_replace page=page_obj.previous_page_number %}"> ◀️ </a>
+        {% endif %}
+
+        <span>
+            Страница №{{ page_obj.number }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?{% url_replace page=page_obj.next_page_number %}"> ▶️ </a>
+        {% endif %}
+    </span>
+        </div>
+    {% endif %}
 
 {% endblock %}
