@@ -20,7 +20,7 @@ class Card(models.Model):
     release_data = models.DateTimeField(auto_now_add=True,
                                         verbose_name='дата выпуска')
     term = models.PositiveSmallIntegerField(choices=TERM_CHOICES,
-                            verbose_name='срок')
+                                            verbose_name='срок')
     end_activity = models.DateTimeField(
         verbose_name='дата окончания активности')
     amount = models.DecimalField(max_digits=10,
@@ -51,7 +51,7 @@ class ProfileCard(models.Model):
     email = models.EmailField(verbose_name='email')
     phone_number_regex = RegexValidator(regex=r"\+7\d{10,10}$")
     phone = models.CharField(validators=[phone_number_regex], max_length=12,
-                             blank=True, verbose_name='телефон')
+                             verbose_name='телефон')
 
     class Meta:
         db_table = "profile"

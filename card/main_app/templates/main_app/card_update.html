@@ -2,5 +2,15 @@
 {% load static %}
 
 {% block content %}
-    {{ form.as_p }}
+    <form action="{% url 'main:card_update' pk=object.card.pk %}"
+          method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if object.card.is_active %}
+            <button type="submit">деактивировать</button>
+        {% else %}
+            <button type="submit">активировать</button>
+        {% endif %}
+        <a href="{% url 'main:card_delete' pk=object.pk %}">удалить</a>
+    </form>
 {% endblock %}

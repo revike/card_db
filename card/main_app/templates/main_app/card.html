@@ -11,8 +11,14 @@
         <p>просрочена</p>
     {% elif object.card.is_active %}
         <p>активирована</p>
+        <div>
+            <a href="{% url 'main:card_update' pk=object.card.pk %}">деактивировать</a>
+        </div>
     {% else %}
         <p>не активирована</p>
+        <div>
+            <a href="{% url 'main:card_update' pk=object.card.pk %}">активировать</a>
+        </div>
     {% endif %}
 
     <div>{{ object.first_name }}</div>

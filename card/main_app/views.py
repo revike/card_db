@@ -56,8 +56,27 @@ class ProfileCardUpdateView(generic.UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = f'Изменить {self.object.card}'
+        update = 'активировать'
+        if self.object.card.is_active:
+            update = 'деактивировать'
+        context['title'] = f'{update} {self.object.card}'
         return context
+
+    def form_valid(self, form):
+        data = form.data
+        card = self.get_object()
+        if not card.card.is_active:
+            card.card.is_active = True
+        else:
+            card.card.is_active = False
+        card.phone = data['phone']
+        card.first_name = data['first_name']
+        card.last_name = data['last_name']
+        card.email = data['email']
+        card.save()
+        card.card.save()
+        return HttpResponseRedirect(
+            reverse('main:card_update', kwargs={'pk': self.kwargs['pk']}))
 
     @method_decorator(user_passes_test(lambda u: u.is_staff))
     def dispatch(self, *args, **kwargs):
