@@ -4,8 +4,11 @@
 
 {% block content %}
     {% for object in object_list %}
-        <div><a href="{% url 'main:card' pk=object.pk %}">{{ object.card }}</a></div>
+        <div><a href="{% url 'main:card' pk=object.pk %}">{{ object.card }}</a>
+        </div>
     {% endfor %}
+
+    <a href="{% url 'main:card_create' %}">Создать карты</a>
 
     {% if page_obj != None %}
         <div>
@@ -14,9 +17,13 @@
             <a href="?{% url_replace page=page_obj.previous_page_number %}"> ◀️ </a>
         {% endif %}
 
-        <span>
+        {% if page_obj and page_obj.has_next %}
+            <span>
             Страница №{{ page_obj.number }}
-        </span>
+        {% elif not page_obj.has_next and page_obj.has_previous %}
+            Страница №{{ page_obj.number }}
+            </span>
+        {% endif %}
 
         {% if page_obj.has_next %}
             <a href="?{% url_replace page=page_obj.next_page_number %}"> ▶️ </a>

@@ -30,16 +30,16 @@ class CardAdmin(admin.ModelAdmin):
     list_display = ('series', 'numbers', 'is_active', 'overdue', 'is_delete')
     list_display_links = ('series', 'numbers')
     fields = (
-        'series', 'numbers', 'release_data', 'term', 'amount',
+        'series', 'numbers', 'release_data', 'term', 'end_activity', 'amount',
         'is_active',
         'overdue', 'is_delete')
     readonly_fields = (
-        'series', 'numbers', 'release_data', 'term', 'amount',
+        'series', 'numbers', 'release_data', 'term', 'end_activity', 'amount',
         'overdue')
     list_filter = ('series', 'term', 'is_active', 'overdue', 'is_delete',)
 
-    def has_delete_permission(self, request, obj=None):
-        return False
+    # def has_delete_permission(self, request, obj=None):
+    #     return False
 
     def has_add_permission(self, request):
         return False

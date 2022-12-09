@@ -2,4 +2,9 @@
 {% load static %}
 
 {% block content %}
+    <p>Удалить?</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <button type="submit">Удалить</button>
+    </form>
 {% endblock %}
