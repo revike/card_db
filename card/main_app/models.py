@@ -6,6 +6,7 @@ from django.db import models
 
 class Card(models.Model):
     """Model card"""
+    objects = None
     TERM_CHOICES = (
         (1, '1 месяц'),
         (6, '6 месяцев'),

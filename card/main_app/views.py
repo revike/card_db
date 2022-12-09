@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
 
@@ -68,17 +68,23 @@ class CardDeleteView(generic.DeleteView):
     """Card delete view"""
     template_name = 'main_app/card_delete.html'
     model = Card
+    success_url = reverse_lazy('main:cards')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = f'Удалить {self.object}'
         return context
 
-    def delete(self, request, *args, **kwargs):
+    def get_queryset(self):
+        return self.model.objects.filter(id=self.kwargs['pk'])
+
+    def form_valid(self, request, *args, **kwargs):
         card = self.get_object()
         if not card.is_delete:
-            print('delete')
-        return HttpResponseRedirect(reverse('main:list'))
+            card.is_delete = True
+            card.is_active = False
+            card.save()
+        return HttpResponseRedirect(self.get_success_url())
 
     @method_decorator(user_passes_test(lambda u: u.is_staff))
     def dispatch(self, *args, **kwargs):

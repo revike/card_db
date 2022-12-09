@@ -27,6 +27,9 @@
                 {{ history.data_use }}
             </div>
         {% endfor %}
+    </div>
 
+    <div>
+        <a href="{% url 'main:card_delete' pk=object.card.pk %}">удалить</a>
     </div>
 {% endblock %}
