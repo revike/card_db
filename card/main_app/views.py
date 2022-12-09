@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 
 from main_app.forms import CardUpdateForm, CardCreateForm
-from main_app.models import ProfileCard, Card
+from main_app.models import ProfileCard, Card, HistoryCard
 
 
 class CardListView(generic.ListView):
@@ -34,6 +34,8 @@ class CardDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        history_card = HistoryCard.objects.filter(card=self.object.card)
+        context['history_card'] = history_card
         context['title'] = f'{self.object.card}'
         return context
 

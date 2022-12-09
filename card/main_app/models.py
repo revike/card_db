@@ -63,6 +63,7 @@ class ProfileCard(models.Model):
 
 class HistoryCard(models.Model):
     """Date of use card"""
+    objects = None
     card = models.ForeignKey(Card, on_delete=models.CASCADE,
                              verbose_name='карта')
     data_use = models.DateTimeField(verbose_name='дата использования')

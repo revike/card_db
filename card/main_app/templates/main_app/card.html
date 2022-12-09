@@ -2,6 +2,31 @@
 {% load static %}
 
 {% block content %}
-    {{ object.card }}
-    {{ object }}
+    <div>Card: {{ object.card }}</div>
+    <div>Выпущена: {{ object.card.release_data }}</div>
+    <div>Срок: {{ object.card.term }} мес.</div>
+    <div>Активна до: {{ object.card.end_activity }}</div>
+
+    {% if object.card.overdue %}
+        <p>просрочена</p>
+    {% elif object.card.is_active %}
+        <p>активирована</p>
+    {% else %}
+        <p>не активирована</p>
+    {% endif %}
+
+    <div>{{ object.first_name }}</div>
+    <div>{{ object.last_name }}</div>
+    <div>{{ object.email }}</div>
+    <div>{{ object.phone }}</div>
+
+    <div>
+        History
+        {% for history in history_card %}
+            <div>
+                {{ history.data_use }}
+            </div>
+        {% endfor %}
+
+    </div>
 {% endblock %}
