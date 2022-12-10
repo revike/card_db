@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_elasticsearch_dsl',
+
     'main_app',
+    'search_app',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +72,13 @@ TEMPLATES = [
         },
     },
 ]
+
+# Elasticsearch
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': f'{env("ELASTIC_SEARCH_HOST")}:{env("ELASTIC_SEARCH_PORT")}'
+    }
+}
 
 WSGI_APPLICATION = 'card.wsgi.application'
 

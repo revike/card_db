@@ -17,7 +17,7 @@
             <a href="?{% url_replace page=page_obj.previous_page_number %}"> ◀️ </a>
         {% endif %}
 
-        {% if page_obj and page_obj.has_next %}
+        {% if page_obj != none and page_obj.has_next %}
             <span>
             Страница №{{ page_obj.number }}
         {% elif not page_obj.has_next and page_obj.has_previous %}
@@ -31,5 +31,28 @@
     </span>
         </div>
     {% endif %}
+
+    <form action="{% url 'search:search' %}" method="get">
+        <div>
+            <label>
+                <input type="text"
+                       placeholder="поиск..."
+                       name="search" value="{{ request.GET.search }}">
+            </label>
+            <button type="submit">🔎</button>
+        </div>
+
+        <p>
+            <label>
+                <select name="filter">
+                    <option selected value="all">без фильтра</option>
+                    <option value="is_active">активированные</option>
+                    <option value="not_is_active">не активированные</option>
+                    <option value="overdue">просроченные</option>
+                    <option value="not_overdue">не просроченные</option>
+                </select>
+            </label>
+        </p>
+    </form>
 
 {% endblock %}
