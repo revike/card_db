@@ -21,7 +21,6 @@ class SearchView(generic.ListView):
         request_get = self.request.GET
         search = request_get.get('search')
         filters = request_get.getlist('filter')
-        print('===>', filters)
 
         q = Q(
             'multi_match',
@@ -49,7 +48,7 @@ class SearchView(generic.ListView):
                                                  card__overdue=True)
             if 'not_overdue' in filters:
                 object_list = object_list.filter('match_phrase',
-                                                 card__overdue=True)
+                                                 card__overdue=False)
 
         return object_list.filter('match_phrase', card__is_delete=False)
 
