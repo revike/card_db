@@ -59,6 +59,7 @@ class ProfileCard(models.Model):
         db_table = "profile"
         verbose_name = "Профиль"
         verbose_name_plural = "Профили"
+        ordering = ['id']
 
     @receiver(post_save, sender=Card)
     def create_card_profile(sender, instance, created, **kwargs):
