@@ -5,6 +5,17 @@ from main_app.utils import add_months
 
 
 @shared_task(autoretry_for=(Exception,),
+             retry_kwargs={'max_retries': 10, 'countdown': 5})
+def deactivate_card():
+    """Deactivate card"""
+    cards = Card.objects.filter(end_activity__lte=now())
+    for i in cards:
+        i.is_active=False
+        i.overdue=True
+        i.save()
+
+
+@shared_task(autoretry_for=(Exception,),
              retry_kwargs={'max_retries': 10, 'countdown': 60})
 def generate_cards(term, score):
     """Generate cards"""

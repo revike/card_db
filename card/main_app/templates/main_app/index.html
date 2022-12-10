@@ -4,7 +4,7 @@
 
 {% block content %}
     {% for object in object_list %}
-        <div><a href="{% url 'main:card' pk=object.pk %}">{{ object.card }}</a>
+        <div><a href="{% url 'main:card' pk=object.card.pk %}">{{ object.card }}</a>
         </div>
     {% endfor %}
 
