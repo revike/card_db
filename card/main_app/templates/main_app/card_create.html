@@ -1,0 +1,13 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="content_card">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.term }}
+            {{ form.score }}
+            <button type="submit">сгенерировать</button>
+        </form>
+    </div>
+{% endblock %}

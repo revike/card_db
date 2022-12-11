@@ -1,0 +1,188 @@
+@import url("//fonts.googleapis.com/css?family=Nunito");
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Nunito', serif;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.content {
+    flex: 1 0 auto;
+}
+
+.header_string {
+    display: flex;
+    justify-content: end;
+    margin: 15px;
+}
+
+.header_admin {
+    margin: 0 30px 0 0;
+}
+
+.header_admin_button {
+    text-decoration: none;
+    color: #212121;
+}
+
+.header_admin_button:hover {
+    color: #6f94c6;
+}
+
+.header_title {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.header_logout {
+    text-align: right;
+}
+
+.header_logout_button {
+    border: 1px #222222 solid;
+    padding: 5px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #000000;
+    margin: 0 5px 0 0;
+}
+
+.header_logout_button:hover {
+    border: 1px #6f94c6 solid;
+    color: #ffffff;
+    background-color: #6f94c6;
+}
+
+.footer {
+    flex: 1 0 auto;
+    height: 40px;
+    text-align: center;
+    margin: 15px;
+}
+
+input[type=text], input[type=email] {
+    width: 10%;
+    padding: 4px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=email]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+.header_search {
+    text-align: center;
+}
+
+/*content*/
+
+.cards_content {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.card_block {
+    border: 1px #6f94c6 solid;
+    border-radius: 15px;
+    min-width: 25%;
+    margin: 40px auto 0 auto;
+    text-align: center;
+    line-height: 21px;
+}
+
+.card_name {
+    line-height: 21px;
+    margin: 30px;
+}
+
+.card_status {
+    color: red;
+    font-size: 14px;
+    line-height: 21px;
+    margin: 5px 20px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card_status_active {
+    color: green;
+    font-size: 14px;
+    line-height: 21px;
+    margin: 5px 20px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card_status_not_active {
+    color: #6f94c6;
+    font-size: 14px;
+    line-height: 21px;
+    margin: 5px 20px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card_none {
+    text-align: center;
+    color: indianred;
+}
+
+.card_create {
+    text-align: center;
+    margin: 20px;
+}
+
+.card_create a {
+    text-decoration: none;
+}
+
+.card_create a:hover {
+    text-decoration: none;
+    color: #6e6b7b;
+}
+
+.pagination {
+    text-align: center;
+}
+
+a {
+    color: dodgerblue;
+}
+
+.errorlist {
+    color: indianred;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.footer a:hover {
+    text-decoration: none;
+    color: #6f94c6;
+}
+
+.content_card {
+    text-align: center;
+    margin-top: 30px;
+}

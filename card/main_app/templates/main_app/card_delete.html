@@ -1,0 +1,15 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="content_card">
+        <p>Удалить?</p>
+        <form action="" method="post">
+            {% csrf_token %}
+            <button type="submit">Удалить</button>
+        </form>
+        <div>
+            <a href="{% url 'main:card' pk=object.pk %}">Назад</a>
+        </div>
+    </div>
+{% endblock %}

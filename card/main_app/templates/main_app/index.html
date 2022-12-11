@@ -1,0 +1,47 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% load url_replace %}
+
+{% block content %}
+    {% if object_list.count != 0 %}
+        <div class="cards_content">
+            {% for object in object_list %}
+                <div class="card_block">
+                    <div class="card_name">
+                        <div>
+                            <a href="{% url 'main:card' pk=object.card.id %}">
+                                {{ object.card.series }} {{ object.card.numbers }}
+                            </a>
+                        </div>
+                        {% if object.card.overdue %}
+                            <div class="card_status">
+                                Просрочена
+                            </div>
+                        {% elif not object.card.overdue and object.card.is_active %}
+                            <div class="card_status_active">
+                                Активна
+                            </div>
+                        {% else %}
+                            <div class="card_status_not_active">
+                                Не активна
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card_none">
+            <h3>Карты не найдены</h3>
+        </div>
+    {% endif %}
+
+    <div class="card_create">
+        <a href="{% url 'main:card_create' %}">Создать карты</a>
+    </div>
+
+    <div class="pagination">
+        {% include 'main_app/includes/inc_pagination.html' %}
+    </div>
+
+{% endblock %}

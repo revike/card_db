@@ -1,0 +1,93 @@
+version: "3.3"
+
+services:
+  celery:
+    restart: always
+    container_name: celery
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    command: bash -c "cd card && celery -A card worker -l info"
+    volumes:
+      - celery_data:/var/lib/celery/data
+      - .:/code
+    depends_on:
+      - web
+      - redis
+
+  celery_beat:
+    restart: always
+    container_name: celery_beat
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    command: bash -c "cd card && celery -A card beat -l info"
+    volumes:
+      - celery_data:/var/lib/celery_beat/data
+      - .:/code
+    depends_on:
+      - web
+      - redis
+
+  redis:
+    restart: always
+    image: redis:5
+    container_name: card_redis
+    volumes:
+      - redis_data:/var/lib/redis/data
+    ports:
+      - 6379:6379
+
+  db:
+    image: postgres:14.5
+    container_name: db
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  es:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+    image: elasticsearch:7.17.0
+    container_name: elasticsearch
+    volumes:
+      - es_data:/var/lib/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web
+    volumes:
+      - .:/code
+    command: ./docker_commands.sh
+    env_file:
+      - .env
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - es
+
+
+volumes:
+  pg_data:
+  redis_data:
+  celery_data:
+  celery_beat:
+  es_data:

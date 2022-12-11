@@ -1,0 +1,23 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="content_card">
+        <form action="{% url 'main:card_update' pk=object.card.pk %}"
+              method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if object.card.is_active %}
+                <button type="submit">деактивировать</button>
+            {% else %}
+                <button type="submit">активировать</button>
+            {% endif %}
+        </form>
+        <div>
+            <a href="{% url 'main:card_delete' pk=object.pk %}">удалить</a>
+        </div>
+        <div>
+            <a href="{% url 'main:card' pk=object.card.pk %}">Назад</a>
+        </div>
+    </div>
+{% endblock %}
