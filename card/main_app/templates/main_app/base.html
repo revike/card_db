@@ -10,21 +10,50 @@
     </title>
 
     {% block css %}
+        <link rel="stylesheet" type="text/css"
+              href="{% static 'css/style.css' %}">
     {% endblock %}
 
     {% block js %}
     {% endblock %}
 </head>
 <body>
+<div class="wrapper">
+    {% block header %}
+        <div class="header_string">
+            {% if not user.is_anonymous %}
+                {% if user.is_superuser %}
+                    <div class="header_admin">
+                        <a class="header_admin_button"
+                           href="{% url 'admin:index' %}">Админ панель</a>
+                    </div>
+                {% endif %}
+                <div class="header_logout">
+                    <a class="header_logout_button"
+                       href="{% url 'admin:logout' %}">Выход</a>
+                </div>
+                </div>
+                {% include 'main_app/includes/inc_search.html' %}
+                <div class="header_title">
+                    <h1>{{ title|capfirst }}</h1>
+                    {% if request.resolver_match.url_name != 'cards' %}
+                        <a class="header_admin_button"
+                           href="{% url 'main:cards' %}">На главную</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+    {% endblock %}
+<div class="content">
+    {% block content %}
+    {% endblock %}
+</div>
 
-{% block header %}
-{% endblock %}
-
-{% block content %}
-{% endblock %}
-
-{% block footer %}
-{% endblock %}
-
+    {% block footer %}
+        <div class="footer">
+            <a href="{% url 'main:cards' %}">&copy; Card
+                Database {% now 'Y' %}</a>
+        </div>
+    {% endblock %}
+</div>
 </body>
 </html>

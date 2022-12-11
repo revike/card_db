@@ -2,9 +2,14 @@
 {% load static %}
 
 {% block content %}
-    <p>Удалить?</p>
-    <form action="" method="post">
-        {% csrf_token %}
-        <button type="submit">Удалить</button>
-    </form>
+    <div class="content_card">
+        <p>Удалить?</p>
+        <form action="" method="post">
+            {% csrf_token %}
+            <button type="submit">Удалить</button>
+        </form>
+        <div>
+            <a href="{% url 'main:card' pk=object.pk %}">Назад</a>
+        </div>
+    </div>
 {% endblock %}

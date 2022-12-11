@@ -8,8 +8,8 @@ from search_app.documents import CardOptionsDocument
 
 class SearchView(generic.ListView):
     """ElasticSearch view"""
-    template_name = 'search_app/search.html'
-    paginate_by = 40
+    template_name = 'main_app/index.html'
+    paginate_by = 15
 
     def get_context_data(self, **kwargs):
         """Возвращает контекст для этого представления"""

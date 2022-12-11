@@ -1,16 +1,5 @@
-{% extends 'main_app/base.html' %}
-{% load static %}
-
-{% block content %}
-
-    {% for object in object_list %}
-        <div>
-            <a href="{% url 'main:card' pk=object.card.id %}">{{ object.card }}</a>
-        </div>
-    {% endfor %}
-
-    {% if page_obj != None %}
-        <div>
+{% if page_obj != None %}
+    <div>
     <span>
         {% if page_obj.has_previous %}
             <a href="?{% url_replace page=page_obj.previous_page_number %}"> ◀️ </a>
@@ -28,7 +17,5 @@
             <a href="?{% url_replace page=page_obj.next_page_number %}"> ▶️ </a>
         {% endif %}
     </span>
-        </div>
-    {% endif %}
-
-{% endblock %}
+    </div>
+{% endif %}

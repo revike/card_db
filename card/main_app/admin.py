@@ -38,8 +38,8 @@ class CardAdmin(admin.ModelAdmin):
         'overdue')
     list_filter = ('series', 'term', 'is_active', 'overdue', 'is_delete',)
 
-    # def has_delete_permission(self, request, obj=None):
-    #     return False
+    def has_delete_permission(self, request, obj=None):
+        return False
 
     def has_add_permission(self, request):
         return False

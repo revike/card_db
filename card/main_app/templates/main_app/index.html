@@ -3,56 +3,45 @@
 {% load url_replace %}
 
 {% block content %}
-    {% for object in object_list %}
-        <div><a href="{% url 'main:card' pk=object.card.pk %}">{{ object.card }}</a>
+    {% if object_list.count != 0 %}
+        <div class="cards_content">
+            {% for object in object_list %}
+                <div class="card_block">
+                    <div class="card_name">
+                        <div>
+                            <a href="{% url 'main:card' pk=object.card.id %}">
+                                {{ object.card.series }} {{ object.card.numbers }}
+                            </a>
+                        </div>
+                        {% if object.card.overdue %}
+                            <div class="card_status">
+                                Просрочена
+                            </div>
+                        {% elif not object.card.overdue and object.card.is_active %}
+                            <div class="card_status_active">
+                                Активна
+                            </div>
+                        {% else %}
+                            <div class="card_status_not_active">
+                                Не активна
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-
-    <a href="{% url 'main:card_create' %}">Создать карты</a>
-
-    {% if page_obj != None %}
-        <div>
-    <span>
-        {% if page_obj.has_previous %}
-            <a href="?{% url_replace page=page_obj.previous_page_number %}"> ◀️ </a>
-        {% endif %}
-
-        {% if page_obj != none and page_obj.has_next %}
-            <span>
-            Страница №{{ page_obj.number }}
-        {% elif not page_obj.has_next and page_obj.has_previous %}
-            Страница №{{ page_obj.number }}
-            </span>
-        {% endif %}
-
-        {% if page_obj.has_next %}
-            <a href="?{% url_replace page=page_obj.next_page_number %}"> ▶️ </a>
-        {% endif %}
-    </span>
+    {% else %}
+        <div class="card_none">
+            <h3>Карты не найдены</h3>
         </div>
     {% endif %}
 
-    <form action="{% url 'search:search' %}" method="get">
-        <div>
-            <label>
-                <input type="text"
-                       placeholder="поиск..."
-                       name="search" value="{{ request.GET.search }}">
-            </label>
-            <button type="submit">🔎</button>
-        </div>
+    <div class="card_create">
+        <a href="{% url 'main:card_create' %}">Создать карты</a>
+    </div>
 
-        <p>
-            <label>
-                <select name="filter">
-                    <option selected value="all">без фильтра</option>
-                    <option value="is_active">активированные</option>
-                    <option value="not_is_active">не активированные</option>
-                    <option value="overdue">просроченные</option>
-                    <option value="not_overdue">не просроченные</option>
-                </select>
-            </label>
-        </p>
-    </form>
+    <div class="pagination">
+        {% include 'main_app/includes/inc_pagination.html' %}
+    </div>
 
 {% endblock %}
