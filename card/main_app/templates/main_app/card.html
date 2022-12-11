@@ -2,40 +2,42 @@
 {% load static %}
 
 {% block content %}
-    <div>Card: {{ object.card }}</div>
-    <div>Выпущена: {{ object.card.release_data }}</div>
-    <div>Срок: {{ object.card.term }} мес.</div>
-    <div>Активна до: {{ object.card.end_activity }}</div>
+    <div class="content_card">
+        <div>Карта: {{ object.card }}</div>
+        <div>Выпущена: {{ object.card.release_data }}</div>
+        <div>Срок: {{ object.card.term }} мес.</div>
+        <div>Активна до: {{ object.card.end_activity }}</div>
 
-    {% if object.card.overdue %}
-        <p>просрочена</p>
-    {% elif object.card.is_active %}
-        <p>активирована</p>
-        <div>
-            <a href="{% url 'main:card_update' pk=object.card.pk %}">деактивировать</a>
-        </div>
-    {% else %}
-        <p>не активирована</p>
-        <div>
-            <a href="{% url 'main:card_update' pk=object.card.pk %}">активировать</a>
-        </div>
-    {% endif %}
-
-    <div>{{ object.first_name }}</div>
-    <div>{{ object.last_name }}</div>
-    <div>{{ object.email }}</div>
-    <div>{{ object.phone }}</div>
-
-    <div>
-        History
-        {% for history in history_card %}
+        {% if object.card.overdue %}
+            <div class="card_status">просрочена</div>
+        {% elif object.card.is_active %}
+            <div class="card_status_active">активирована</div>
             <div>
-                {{ history.data_use }}
+                <a href="{% url 'main:card_update' pk=object.card.pk %}">деактивировать</a>
             </div>
-        {% endfor %}
-    </div>
+        {% else %}
+            <div class="card_status_not_active">не активирована</div>
+            <div>
+                <a href="{% url 'main:card_update' pk=object.card.pk %}">активировать</a>
+            </div>
+        {% endif %}
 
-    <div>
-        <a href="{% url 'main:card_delete' pk=object.card.pk %}">удалить</a>
+        <div>{{ object.first_name }} {{ object.last_name }}</div>
+        <div>{{ object.email }}</div>
+        <div>{{ object.phone }}</div>
+
+        <div>
+            History
+            {% for history in history_card %}
+                <div>
+                    {{ history.data_use }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div>
+            <a href="{% url 'main:card_delete' pk=object.card.pk %}">удалить</a>
+        </div>
+
     </div>
 {% endblock %}

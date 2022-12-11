@@ -2,9 +2,12 @@
 {% load static %}
 
 {% block content %}
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">сгенерировать</button>
-    </form>
+    <div class="content_card">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.term }}
+            {{ form.score }}
+            <button type="submit">сгенерировать</button>
+        </form>
+    </div>
 {% endblock %}

@@ -13,7 +13,7 @@ class CardListView(generic.ListView):
     """Card list view"""
     template_name = 'main_app/index.html'
     model = ProfileCard
-    paginate_by = 40
+    paginate_by = 15
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -21,7 +21,8 @@ class CardListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        return self.model.objects.filter(card__is_delete=False)
+        return self.model.objects.filter(card__is_delete=False).select_related(
+            'card')
 
     @method_decorator(user_passes_test(lambda u: u.is_staff))
     def dispatch(self, *args, **kwargs):
@@ -42,7 +43,8 @@ class CardDetailView(generic.DetailView):
 
     def get_queryset(self):
         return self.model.objects.filter(card__is_delete=False,
-                                         card=self.kwargs['pk'])
+                                         card=self.kwargs[
+                                             'pk']).select_related('card')
 
     @method_decorator(user_passes_test(lambda u: u.is_staff))
     def dispatch(self, *args, **kwargs):
@@ -62,6 +64,11 @@ class ProfileCardUpdateView(generic.UpdateView):
             update = 'деактивировать'
         context['title'] = f'{update} {self.object.card}'
         return context
+
+    def get_queryset(self):
+        return self.model.objects.filter(card__is_delete=False,
+                                         card=self.kwargs[
+                                             'pk']).select_related('card')
 
     def form_valid(self, form):
         data = form.data
