@@ -9,8 +9,10 @@ click-didyoumean==0.3.0
 click-plugins==1.1.1
 click-repl==0.2.0
 Django==4.1.4
+django-debug-toolbar-template-profiler==2.1.0
 django-elasticsearch-dsl==7.2.2
 django-environ==0.9.0
+django_debug_toolbar==3.8.1
 elasticsearch==7.17.8
 elasticsearch-dsl==7.4.0
 kombu==5.2.4
@@ -24,3 +26,4 @@ sqlparse==0.4.3
 urllib3==1.26.13
 vine==5.0.0
 wcwidth==0.2.5
+wrapt==1.14.1
